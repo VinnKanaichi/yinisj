@@ -1,0 +1,111 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#FFE600"><meta name="description" content="Create Wink account generator — Vinn Dev"><title>GENERATOR / CREATE WINK</title><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/neo.css"><style>
+@keyframes cwTestEnter {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+body .topbar,
+body .generator-intro,
+body .generator-grid,
+body .generator-card,
+body .side-card,
+body .footer {
+  animation: cwTestEnter .8s ease both !important;
+}
+
+body .generator-intro { animation-delay: .1s !important; }
+body .generator-grid { animation-delay: .2s !important; }
+body .generator-card { animation-delay: .3s !important; }
+body .side-card { animation-delay: .4s !important; }
+body .footer { animation-delay: .5s !important; }
+</style></head><body><header class="topbar wrap">
+<a href="/index.html" class="brand">
+  <img
+    src="/logo.png"
+    alt="Create Wink"
+    class="brand-mark"
+  >
+  <div class="brand-name">
+    CREATE WINK
+    <span>VINN DEV</span>
+  </div>
+</a>
+<div class="top-actions"><span class="tag mint"><i id="apiDot"></i><span id="apiStatusText">API READY</span></span><a class="btn btn-white" href="/">← DASHBOARD</a></div></header>
+<main class="wrap generator-page"><section class="generator-intro"><span class="eyebrow">TOOL / ACCOUNT GENERATOR</span><h1>CREATE<br><span class="outline-text">WINK.</span></h1><p>Tekan tombol untuk menjalankan generator. Hasil akun akan muncul sebagai bubble dan otomatis masuk ke riwayat lokal perangkat ini.</p><div class="stats-row"><div><strong id="heroCreated">0</strong><span>ACCOUNTS CREATED</span></div><div><strong id="heroSessions">0</strong><span>TOTAL REQUESTS</span></div><div><strong>10s</strong><span>REQUEST COOLDOWN</span></div></div></section>
+<section class="generator-grid"><article class="generator-card"><div class="card-heading"><div><span class="eyebrow">01 / NEW REQUEST</span><h2>GENERATE ACCOUNT</h2></div><span class="icon-tile yellow-block">↗</span></div><div class="request-row"><span class="method">POST</span><code>/api/create-wink</code><span class="tag">LIMIT 1</span></div><p class="muted">API key tetap diproses di server. Satu request membuat maksimal satu akun.</p><button class="btn btn-yellow create-button" id="createButton"><span class="create-button-label">CREATE WINK</span><span class="button-icon">↗</span></button><div class="loading-wrap hidden" id="loadingWrap"><div class="loading-track"><span></span></div><div class="loading-meta"><span id="loadingText">Menghubungi API...</span><span id="loadingPercent">0%</span></div><div class="loading-steps"><span class="step active" id="step1">REQUEST SENT</span><span class="step" id="step2">PROCESSING</span><span class="step" id="step3">RESULT READY</span></div></div><div class="notice hidden" id="notice" role="status"></div><div class="generator-actions"><button class="btn btn-black" id="openHistory">◷ VIEW HISTORY <span id="historyButtonCount">(0)</span></button><button class="btn btn-white" id="clearHistory">CLEAR HISTORY ×</button></div></article><aside class="side-card cyan"><span class="eyebrow">LIVE INFO / 001</span><div class="big-symbol">{ }</div><h3>YOUR RESULT.<br>YOUR DEVICE.</h3><p>Hasil berhasil disimpan di penyimpanan browser pada perangkat ini. Gunakan tombol riwayat untuk membukanya lagi.</p><span class="tag navy-tag">LOCAL HISTORY</span></aside></section>
+<div class="hidden" id="latest"><span id="resultCount">NO RESULT YET</span><div id="latestResult"></div></div><div class="hidden" id="history"><div id="historySummary"></div><div id="historyList"></div></div></main>
+<footer class="wrap footer"><span>© <span id="copyrightYear">2026</span> VINN DEV</span><span>CREATE WINK / GENERATOR</span><a href="/">DASHBOARD ↑</a></footer>
+<div class="modal-backdrop" id="accountModal" aria-hidden="true"><section class="chat-bubble-modal" role="dialog" aria-modal="true" aria-labelledby="accountModalTitle"><div class="bubble-modal-head"><div><span class="bubble-kicker"><i></i> GENERATOR RESPONSE</span><h2 id="accountModalTitle">ACCOUNT CREATED!</h2></div><button class="bubble-close" data-close-modal="accountModal" aria-label="Tutup hasil">×</button></div><div id="accountBubbleContent"></div></section></div>
+<div class="modal-backdrop" id="historyModal" aria-hidden="true"><section class="chat-bubble-modal history-modal" role="dialog" aria-modal="true" aria-labelledby="historyModalTitle"><div class="bubble-modal-head"><div><span class="bubble-kicker"><i></i> LOCAL STORAGE</span><h2 id="historyModalTitle">YOUR HISTORY</h2><p id="historySummaryModal">Riwayat di perangkat ini</p></div><button class="bubble-close" data-close-modal="historyModal" aria-label="Tutup riwayat">×</button></div><div id="historyBubbleContent"><div id="historyListBubble"></div></div></section></div><div class="toast" id="toast" role="status"></div>
+<script src="/script.js"></script><script>const openModal=id=>{const el=document.getElementById(id);el.classList.add('show');el.setAttribute('aria-hidden','false');document.body.classList.add('modal-open')};const closeModal=id=>{const el=document.getElementById(id);el.classList.remove('show');el.setAttribute('aria-hidden','true');if(!document.querySelector('.modal-backdrop.show'))document.body.classList.remove('modal-open')};document.querySelectorAll('[data-close-modal]').forEach(b=>b.addEventListener('click',()=>closeModal(b.dataset.closeModal)));document.querySelectorAll('.modal-backdrop').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)closeModal(m.id)}));document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-backdrop.show').forEach(m=>closeModal(m.id))});document.querySelector('#openHistory').addEventListener('click',()=>{if(typeof renderHistory==='function')renderHistory();document.querySelector('#historyListBubble').innerHTML=document.querySelector('#historyList').innerHTML;document.querySelector('#historySummaryModal').textContent=document.querySelector('#historySummary').textContent;openModal('historyModal')});document.querySelector('#accountBubbleContent').addEventListener('click',e=>{const b=e.target.closest('[data-copy]');if(!b)return;let v='';try{v=decodeURIComponent(b.dataset.copy)}catch{}if(!v||v==='—')return;const done=()=>{const t=document.querySelector('#toast');t.textContent='Berhasil disalin.';t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)};if(navigator.clipboard?.writeText)navigator.clipboard.writeText(v).then(done).catch(()=>{const x=document.createElement('textarea');x.value=v;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();done()});else{const x=document.createElement('textarea');x.value=v;document.body.appendChild(x);x.select();document.execCommand('copy');x.remove();done()}});document.querySelector('#historyListBubble').addEventListener('click',e=>{const open=e.target.closest('[data-open]');const del=e.target.closest('[data-delete]');if(open){const original=document.querySelector(`#historyList [data-open="${open.dataset.open}"]`);if(original)original.click();closeModal('historyModal')}else if(del){const original=document.querySelector(`#historyList [data-delete="${del.dataset.delete}"]`);if(original)original.click();setTimeout(()=>{document.querySelector('#historyListBubble').innerHTML=document.querySelector('#historyList').innerHTML;document.querySelector('#historySummaryModal').textContent=document.querySelector('#historySummary').textContent},0)}});document.querySelector('#clearHistory').addEventListener('click',()=>{setTimeout(()=>{document.querySelector('#historyListBubble').innerHTML=document.querySelector('#historyList').innerHTML;document.querySelector('#historySummaryModal').textContent=document.querySelector('#historySummary').textContent},0)});
+</script>
+
+<script>
+(() => {
+  const reduceMotion = window.matchMedia(
+    '(prefers-reduced-motion: reduce)'
+  ).matches;
+
+  if (reduceMotion) return;
+
+  let lastTouch = 0;
+
+  function createTouchEffect(x, y) {
+    const ring = document.createElement('span');
+    ring.className = 'cw-touch-ring';
+    ring.style.left = x + 'px';
+    ring.style.top = y + 'px';
+    document.body.appendChild(ring);
+    ring.addEventListener('animationend', () => ring.remove());
+
+    const particles = 5;
+
+    for (let i = 0; i < particles; i++) {
+      const particle = document.createElement('span');
+      const angle = (Math.PI * 2 * i) / particles;
+      const distance = 24 + Math.random() * 16;
+
+      particle.className = 'cw-touch-particle';
+      particle.style.left = x + 'px';
+      particle.style.top = y + 'px';
+      particle.style.setProperty(
+        '--tx',
+        Math.cos(angle) * distance + 'px'
+      );
+      particle.style.setProperty(
+        '--ty',
+        Math.sin(angle) * distance + 'px'
+      );
+
+      document.body.appendChild(particle);
+      particle.addEventListener(
+        'animationend',
+        () => particle.remove()
+      );
+    }
+  }
+
+  document.addEventListener('pointerdown', event => {
+    if (event.pointerType === 'mouse' && event.button !== 0) {
+      return;
+    }
+
+    const now = Date.now();
+
+    // Mencegah efek bertumpuk berlebihan
+    if (now - lastTouch < 100) return;
+    lastTouch = now;
+
+    createTouchEffect(event.clientX, event.clientY);
+  }, { passive: true });
+})();
+</script>
+</body>
+</html>
+</body></html>
