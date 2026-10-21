@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#FFE600">
+  <meta name="description" content="AM Prem tools — Vinn Dev">
+  <title>AM PREM / VINN DEV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../neo.css">
+  <link rel="stylesheet" href="./am-prem.css">
+</head>
+<body class="amprem-page">
+  <header class="topbar wrap">
+    <a href="/index.html" class="brand">
+      <img src="/logo.png" alt="Create Wink" class="brand-mark">
+      <div class="brand-name">ALIGHT MOTION VINN</span></div>
+    </a>
+    <div class="top-actions">
+      <span class="tag mint"><i></i><span id="apiStatusText">AM PREM READY</span></span>
+      <a class="btn btn-white" href="/index.html">← DASHBOARD</a>
+    </div>
+  </header>
+
+  <main class="wrap generator-page amprem-main">
+    <section class="generator-intro amprem-intro">
+      <span class="eyebrow">TOOL / ALIGHT MOTION</span>
+      <h1>AM<br><span class="outline-text">PREM.</span></h1>
+      <p>Kirim magic link, verifikasi Gmail, dan gunakan Bulk Generator dengan akses premium.</p>
+      <div class="stats-row">
+        <div><strong>01</strong><span>SEND LINK</span></div>
+        <div><strong>02</strong><span>VERIFY EMAIL</span></div>
+        <div><strong id="bulkStatusStat">LOCKED</strong><span>BULK ACCESS</span></div>
+      </div>
+      <button class="btn btn-black amprem-help-trigger" id="openGuide" type="button">ⓘ CARA PAKAI AM PREM</button>
+    </section>
+
+    <section class="generator-grid amprem-grid">
+      <div class="amprem-left-stack">
+        <article class="generator-card amprem-card">
+          <div class="card-heading">
+            <div><span class="eyebrow">01 / EMAIL REQUEST</span><h2>SEND MAGIC LINK</h2></div>
+            <span class="icon-tile yellow-block">↗</span>
+          </div>
+          <p class="muted">Masukkan Gmail aktif. Link verifikasi akan dikirim ke email tersebut.</p>
+          <form id="sendForm" class="amprem-form">
+            <label for="sendEmail">GMAIL</label>
+            <input id="sendEmail" name="email" type="email" placeholder="nama@gmail.com" autocomplete="email" required>
+            <button class="btn btn-yellow amprem-submit" id="sendButton" type="submit">
+              <span>KIRIM MAGIC LINK</span><span class="button-icon">↗</span>
+            </button>
+          </form>
+          <div class="notice hidden" id="sendNotice" role="status" aria-live="polite"></div>
+        </article>
+
+        <article class="generator-card amprem-card">
+          <div class="card-heading">
+            <div><span class="eyebrow">02 / EMAIL VERIFICATION</span><h2>VERIFY GMAIL</h2></div>
+            <span class="icon-tile cyan-block">✓</span>
+          </div>
+          <p class="muted">Gunakan Gmail yang sama seperti saat meminta magic link, lalu tempel link Alight Creative dari email.</p>
+          <form id="verifyForm" class="amprem-form">
+            <label for="verifyEmail">GMAIL SEBELUMNYA</label>
+            <input id="verifyEmail" name="email" type="email" placeholder="nama@gmail.com" autocomplete="email" required>
+            <label for="magicLink">MAGIC LINK ALIGHT CREATIVE</label>
+            <textarea id="magicLink" name="link" rows="3" placeholder="Tempel link yang kamu terima di Gmail..." required></textarea>
+            <button class="btn btn-yellow amprem-submit" id="verifyButton" type="submit">
+              <span>VERIFY SEKARANG</span><span class="button-icon">✓</span>
+            </button>
+          </form>
+          <div class="notice hidden" id="verifyNotice" role="status" aria-live="polite"></div>
+        </article>
+
+        <article class="generator-card amprem-card amprem-bulk-card" id="bulkCard">
+          <div class="card-heading">
+            <div><span class="eyebrow">03 / PREMIUM FEATURE</span><h2>BULK GENERATOR</h2></div>
+            <span class="icon-tile navy-tag" id="bulkIcon">⌑</span>
+          </div>
+          <p class="muted">Fitur bulk hanya tersedia setelah kode premium yang valid berhasil diperiksa.</p>
+          <div class="amprem-lock-panel" id="bulkLockPanel">
+            <div class="amprem-lock-symbol">⌑</div>
+            <strong>BULK ACCESS LOCKED</strong>
+            <span>Masukkan kode akses premium untuk membuka fitur ini.</span>
+            <form id="unlockForm" class="amprem-form">
+              <label for="premiumCode">KODE PREMIUM</label>
+              <input id="premiumCode" name="code" type="text" placeholder="Masukkan kode akses" autocomplete="off" required>
+              <button class="btn btn-black amprem-submit" id="unlockButton" type="submit">VALIDASI KODE ↗</button>
+            </form>
+            <div class="notice hidden" id="unlockNotice" role="status" aria-live="polite"></div>
+          </div>
+          <div class="amprem-bulk-content hidden" id="bulkContent">
+            <form id="bulkForm" class="amprem-form">
+              <label for="bulkCount">JUMLAH REQUEST (1–20)</label>
+              <input id="bulkCount" type="number" min="1" max="20" value="5" required>
+              <button class="btn btn-yellow amprem-submit" id="bulkButton" type="submit">
+                <span>JALANKAN BULK</span><span class="button-icon">↗</span>
+              </button>
+            </form>
+            <div class="notice hidden" id="bulkNotice" role="status" aria-live="polite"></div>
+            <pre class="amprem-output hidden" id="bulkOutput"></pre>
+            <button class="btn btn-white amprem-relock" id="relockButton" type="button">KUNCI KEMBALI</button>
+          </div>
+        </article>
+      </div>
+
+      <aside class="side-card cyan amprem-side-card">
+        <span class="eyebrow">QUICK GUIDE / 001</span>
+        <h3>CHECK YOUR<br>INBOX.</h3>
+        <p>Magic link dikirim melalui email. Jika tidak terlihat di Inbox, periksa folder Spam sebelum meminta link baru.</p>
+        <div class="amprem-side-steps">
+          <div><b>01</b><span>Masukkan Gmail</span></div>
+          <div><b>02</b><span>Cek email dan salin link</span></div>
+          <div><b>03</b><span>Tempel link untuk verify</span></div>
+        </div>
+        <span class="tag navy-tag">VERIFY GMAIL GRATIS</span>
+      </aside>
+    </section>
+  </main>
+
+  <footer class="wrap footer">
+    <span>© <span id="copyrightYear">2026</span> VINN DEV</span>
+    <span>AM PREM / ALIGHT MOTION TOOLS</span>
+    <a href="/index.html">DASHBOARD ↑</a>
+  </footer>
+
+  <div class="amprem-guide-overlay show" id="guideOverlay" role="dialog" aria-modal="true" aria-labelledby="guideTitle">
+    <section class="amprem-guide-modal">
+      <div class="amprem-guide-top">
+        <span class="eyebrow">READ BEFORE STARTING</span>
+        <span class="icon-tile yellow-block">i</span>
+      </div>
+      <h2 id="guideTitle">CARA PAKAI<br><span class="outline-text">AM PREM.</span></h2>
+      <p class="amprem-guide-lead">Ikuti langkah ini agar proses verifikasi Gmail berjalan dengan benar.</p>
+      <ol class="amprem-guide-list">
+        <li><span>01</span><div><strong>Masukkan Gmail</strong><p>Isi Gmail aktif, lalu tekan <b>Kirim Magic Link</b>.</p></div></li>
+        <li><span>02</span><div><strong>Cek email masuk</strong><p>Periksa Inbox. Jika belum ada, cek folder <b>Spam</b> atau tunggu beberapa saat.</p></div></li>
+        <li><span>03</span><div><strong>Salin link Alight Creative</strong><p>Buka email yang dikirim dan salin link verifikasi yang tersedia.</p></div></li>
+        <li><span>04</span><div><strong>Verifikasi Gmail</strong><p>Masukkan Gmail yang sama seperti sebelumnya, tempel link, lalu tekan <b>Verify Sekarang</b>.</p></div></li>
+      </ol>
+      <div class="amprem-guide-note">Catatan: jangan bagikan magic link kepada orang lain. Fitur Bulk membutuhkan kode premium.</div>
+      <button class="btn btn-yellow amprem-submit" id="closeGuide" type="button">MENGERTI, MULAI ↗</button>
+    </section>
+  </div>
+
+  <script src="./am-prem.js"></script>
+</body>
+</html>
