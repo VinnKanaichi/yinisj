@@ -10,7 +10,7 @@
   };
 
   // Replace this URL with the raw URL of your TXT file in GitHub.
-  const GITHUB_CODES_URL = "https://raw.githubusercontent.com/USERNAME/REPO/BRANCH/am-prem-codes.txt";
+  const GITHUB_CODES_URL = "https://raw.githubusercontent.com/VinnKanaichi/yinisj/main/am-prem-codes.txt";
   const ACCESS_STORAGE_KEY = "createwink_am_prem_unlocked_v1";
 
   const $ = (selector) => document.querySelector(selector);
