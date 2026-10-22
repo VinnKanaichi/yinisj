@@ -1,0 +1,968 @@
+
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e4ff">
+  <meta name="description" content="Wink Ultra HD — Vinn Dev">
+  <title>WINK ULTRA HD — VINN DEV</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/neo.css">
+
+  <style>
+    :root {
+      --uh-bg: #f7f6fc;
+      --uh-ink: #29283b;
+      --uh-muted: #77758b;
+      --uh-purple: #dcd5ff;
+      --uh-purple-strong: #8a7cdb;
+      --uh-mint: #d4f4e7;
+      --uh-border: #dcd9e9;
+      --uh-shadow: #39354c;
+      --uh-white: #fff;
+    }
+
+    body {
+      background: var(--uh-bg);
+      color: var(--uh-ink);
+    }
+
+    .uh-wrap {
+      width: min(1040px, calc(100% - 32px));
+      margin-inline: auto;
+    }
+
+    /* NAVBAR */
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--uh-border);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--uh-ink);
+      text-decoration: none;
+      min-width: 0;
+    }
+
+    .brand-mark {
+      width: 43px;
+      height: 43px;
+      object-fit: contain;
+      flex: 0 0 auto;
+    }
+
+    .brand-name {
+      font-size: 14px;
+      line-height: 1.25;
+      font-weight: 900;
+      letter-spacing: -.4px;
+    }
+
+    .brand-name span {
+      display: block;
+      margin-top: 4px;
+      color: var(--uh-muted);
+      font: 9px "Space Mono", monospace;
+      letter-spacing: .8px;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      flex-wrap: wrap;
+      gap: 9px;
+    }
+
+    .top-actions .tag {
+      border-radius: 8px;
+      background: #e7e1ff;
+      color: #574b98;
+      border: 1px solid #cfc5ff;
+      font: 700 9px "Space Mono", monospace;
+      padding: 8px 10px;
+    }
+
+    .uh-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 10px 13px;
+      color: var(--uh-ink);
+      background: #fff;
+      border: 1px solid var(--uh-border);
+      border-radius: 10px;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 800;
+      transition: background .2s, transform .2s;
+    }
+
+    .uh-back:hover {
+      background: var(--uh-mint);
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .uh-intro {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      padding: clamp(24px, 5vw, 42px);
+      margin: 28px 0 30px;
+      background: linear-gradient(125deg, #e9e4ff 0%, #e4eefa 52%, #d9f5e9 100%);
+      color: var(--uh-ink);
+      border: 1.5px solid #cfcbe2;
+      border-radius: 22px;
+      box-shadow: 0 7px 0 #d9d5e8;
+    }
+
+    .uh-intro::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      background: #fff8;
+    }
+
+    .uh-intro::after {
+      content: "✳";
+      position: absolute;
+      z-index: -1;
+      right: 25px;
+      bottom: -43px;
+      color: #9285df;
+      font-size: clamp(110px, 20vw, 170px);
+      line-height: 1;
+      opacity: .18;
+      pointer-events: none;
+    }
+
+    .uh-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #6659aa;
+      font: 700 10px "Space Mono", monospace;
+      letter-spacing: 1.1px;
+    }
+
+    .uh-kicker::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      background: #8a7cdb;
+      border-radius: 50%;
+      box-shadow: 0 0 0 4px #8a7cdb20;
+    }
+
+    .uh-intro h1 {
+      position: relative;
+      margin: 17px 0 0;
+      max-width: 680px;
+      font-size: clamp(39px, 8vw, 76px);
+      line-height: .98;
+      letter-spacing: -3px;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .uh-intro h1 span {
+      color: #8576d4;
+    }
+
+    .uh-intro p {
+      position: relative;
+      max-width: 500px;
+      margin: 20px 0 0;
+      color: #65637b;
+      font-size: 13px;
+      line-height: 1.9;
+    }
+
+    .uh-hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .uh-hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 11px;
+      background: #ffffffa8;
+      border: 1px solid #d3cee8;
+      border-radius: 9px;
+      color: #5f587f;
+      font: 700 9px "Space Mono", monospace;
+    }
+
+    /* MAIN LAYOUT */
+    .uh-tool-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(245px, .62fr);
+      align-items: start;
+      gap: 22px;
+      margin: 28px 0;
+    }
+
+    .uh-panel,
+    .uh-side {
+      min-width: 0;
+      border: 1px solid var(--uh-border);
+      border-radius: 19px;
+      box-shadow: 0 5px 0 #e7e3f0;
+    }
+
+    .uh-panel {
+      padding: clamp(18px, 4vw, 27px);
+      background: #fff;
+    }
+
+    .uh-panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-bottom: 19px;
+      margin-bottom: 21px;
+      border-bottom: 1px solid #eeebf5;
+    }
+
+    .uh-panel-head .eyebrow {
+      display: block;
+      margin-bottom: 8px;
+      color: #89839e;
+      font: 700 9px "Space Mono", monospace;
+      letter-spacing: .8px;
+    }
+
+    .uh-panel-head h2 {
+      margin: 0;
+      color: var(--uh-ink);
+      font-size: clamp(16px, 3vw, 20px);
+      font-weight: 900;
+      letter-spacing: -.5px;
+    }
+
+    .uh-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      background: #e3f7ed;
+      border: 1px solid #c6e9d8;
+      border-radius: 8px;
+      color: #39785f;
+      font: 700 9px "Space Mono", monospace;
+      white-space: nowrap;
+    }
+
+    /* INPUTS */
+    .uh-field {
+      display: block;
+      margin: 21px 0;
+    }
+
+    .uh-field label {
+      display: block;
+      margin-bottom: 10px;
+      color: #37344b;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .uh-field small {
+      display: block;
+      margin-top: 9px;
+      color: #89869b;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .uh-input {
+      display: block;
+      width: 100%;
+      min-width: 0;
+      box-sizing: border-box;
+      padding: 14px;
+      border: 1px solid #dedbea;
+      border-radius: 11px;
+      background: #faf9fe;
+      color: #29283b;
+      font: 12px Inter, sans-serif;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+    }
+
+    .uh-input::placeholder {
+      color: #aaa6ba;
+    }
+
+    .uh-input:focus {
+      background: #fff;
+      border-color: #a69ae9;
+      box-shadow: 0 0 0 4px #a69ae91f;
+    }
+
+    .uh-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 11px;
+      margin: 22px 0;
+      color: #77738c;
+      font-size: 11px;
+      line-height: 1.8;
+      cursor: pointer;
+    }
+
+    .uh-check b {
+      color: #39354e;
+      font-size: 12px;
+    }
+
+    .uh-check input {
+      flex: 0 0 auto;
+      width: 16px;
+      height: 16px;
+      margin-top: 3px;
+      accent-color: #8a7cdb;
+      cursor: pointer;
+    }
+
+    /* MAIN BUTTON */
+    .uh-submit,
+    .uh-warning-btn {
+      position: relative;
+      isolation: isolate;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      min-height: 54px;
+      padding: 14px 17px;
+      overflow: hidden;
+      border: 1px solid #c9c0ef;
+      border-radius: 13px;
+      background: linear-gradient(110deg, #e3ddff 0%, #dcdfff 46%, #d6f5e9 100%);
+      color: #37304f;
+      box-shadow: 0 4px 0 #d1cbea;
+      font: 800 12px Inter, sans-serif;
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+
+    .uh-submit::before,
+    .uh-warning-btn::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: -120%;
+      width: 70%;
+      height: 100%;
+      transform: skewX(-20deg);
+      background: linear-gradient(90deg, transparent, #fff9, transparent);
+      transition: left .55s ease;
+      pointer-events: none;
+    }
+
+    .uh-submit:hover::before,
+    .uh-warning-btn:hover::before {
+      left: 150%;
+    }
+
+    .uh-submit:hover,
+    .uh-warning-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #d1cbea;
+      filter: saturate(1.06);
+    }
+
+    .uh-submit:active,
+    .uh-warning-btn:active {
+      transform: translateY(2px);
+      box-shadow: 0 1px 0 #d1cbea;
+    }
+
+    .uh-submit:disabled {
+      opacity: .6;
+      cursor: wait;
+      transform: none;
+    }
+
+    .uh-submit-icon {
+      display: grid;
+      place-items: center;
+      flex: 0 0 29px;
+      width: 29px;
+      height: 29px;
+      border: 1px solid #ffffffb8;
+      border-radius: 9px;
+      background: #ffffffa8;
+      font-size: 16px;
+    }
+
+    .uh-note {
+      margin-top: 19px;
+      color: #9691a6;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    /* RESULT */
+    .uh-result {
+      display: none;
+      margin-top: 21px;
+      padding: 15px;
+      border: 1px solid #e0dbee;
+      border-radius: 13px;
+      background: #faf9fe;
+    }
+
+    .uh-result.show {
+      display: block;
+      animation: uhAppear .25s ease both;
+    }
+
+    .uh-result h3 {
+      margin: 0 0 12px;
+      color: #45405f;
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    .uh-result pre {
+      max-height: 360px;
+      overflow: auto;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      color: #57516f;
+      font: 11px/1.8 "Space Mono", monospace;
+    }
+
+    .uh-result a {
+      color: #7162c4;
+      overflow-wrap: anywhere;
+    }
+
+    .uh-error {
+      color: #c6536b !important;
+    }
+
+    /* SIDE CARD */
+    .uh-side {
+      position: relative;
+      overflow: hidden;
+      padding: 23px;
+      background: linear-gradient(145deg, #f0ecff, #e8f8f1);
+    }
+
+    .uh-side-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .uh-side-label {
+      color: #8279aa;
+      font: 700 9px "Space Mono", monospace;
+      letter-spacing: .8px;
+    }
+
+    .uh-side-icon {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid #d8d0f4;
+      border-radius: 12px;
+      background: #ffffffb8;
+      color: #8979d8;
+      font-size: 20px;
+    }
+
+    .uh-side-symbol {
+      margin: 26px 0 20px;
+      color: #8c7bdb;
+      font-size: clamp(48px, 7vw, 68px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -5px;
+    }
+
+    .uh-side h3 {
+      margin: 0;
+      color: #36334a;
+      font-size: 23px;
+      line-height: 1.2;
+      font-weight: 900;
+      letter-spacing: -.8px;
+    }
+
+    .uh-side p {
+      margin: 14px 0 20px;
+      color: #77738d;
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .uh-side-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 8px 10px;
+      border: 1px solid #d8d3e9;
+      border-radius: 9px;
+      background: #ffffffbd;
+      color: #6c648e;
+      font: 700 9px "Space Mono", monospace;
+    }
+
+    .uh-side-tag::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #86cdb0;
+    }
+
+    .uh-side-divider {
+      height: 1px;
+      margin: 22px 0;
+      background: #dcd7eb;
+    }
+
+    .uh-side-foot {
+      color: #938da8;
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    /* FOOTER */
+    .uh-footer {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding-top: 20px;
+      padding-bottom: 25px;
+      margin-top: 34px;
+      border-top: 1px solid var(--uh-border);
+      color: #9994aa;
+      font: 9px "Space Mono", monospace;
+    }
+
+    .uh-footer a {
+      color: #7167a5;
+      text-decoration: none;
+    }
+
+    /* WARNING MODAL */
+    .uh-warning-overlay {
+      position: fixed;
+      z-index: 9999;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #34304775;
+      backdrop-filter: blur(9px);
+      -webkit-backdrop-filter: blur(9px);
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .25s ease, visibility .25s ease;
+    }
+
+    .uh-warning-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .uh-warning-box {
+      width: min(420px, 100%);
+      box-sizing: border-box;
+      padding: clamp(23px, 6vw, 32px);
+      border: 1px solid #e0daef;
+      border-radius: 22px;
+      background: linear-gradient(145deg, #fff, #f3f0ff 68%, #edfaf4);
+      box-shadow: 0 20px 70px #27213b28;
+      animation: uhModalIn .35s cubic-bezier(.2,.8,.2,1) both;
+    }
+
+    .uh-warning-icon {
+      display: grid;
+      place-items: center;
+      width: 53px;
+      height: 53px;
+      margin-bottom: 21px;
+      border: 1px solid #d9d0fa;
+      border-radius: 17px;
+      background: linear-gradient(135deg, #e7e0ff, #d8f5e8);
+      color: #7668c1;
+      font-size: 25px;
+    }
+
+    .uh-warning-box .eyebrow {
+      color: #877ba9;
+      font: 700 9px "Space Mono", monospace;
+      letter-spacing: 1px;
+    }
+
+    .uh-warning-box h2 {
+      margin: 12px 0;
+      color: #343047;
+      font-size: clamp(24px, 6vw, 30px);
+      line-height: 1.15;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .uh-warning-box p {
+      margin: 0 0 23px;
+      color: #77738a;
+      font-size: 12px;
+      line-height: 1.9;
+    }
+
+    .uh-warning-box small {
+      display: block;
+      margin-top: 19px;
+      color: #aaa4bb;
+      text-align: center;
+      font: 9px "Space Mono", monospace;
+      letter-spacing: .5px;
+    }
+
+    @keyframes uhModalIn {
+      from { opacity: 0; transform: translateY(14px) scale(.97); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes uhAppear {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 760px) {
+      .uh-wrap {
+        width: calc(100% - 28px);
+      }
+
+      .topbar {
+        gap: 10px;
+        padding-top: 16px;
+        padding-bottom: 16px;
+      }
+
+      .brand-mark {
+        width: 37px;
+        height: 37px;
+      }
+
+      .brand-name {
+        font-size: 12px;
+      }
+
+      .top-actions {
+        gap: 7px;
+      }
+
+      .top-actions .tag {
+        display: none;
+      }
+
+      .uh-back {
+        padding: 9px 10px;
+        font-size: 10px;
+      }
+
+      .uh-intro {
+        padding: 24px 20px;
+        margin: 22px 0 25px;
+        border-radius: 18px;
+        box-shadow: 0 5px 0 #d9d5e8;
+      }
+
+      .uh-intro h1 {
+        letter-spacing: -1.8px;
+      }
+
+      .uh-intro p {
+        font-size: 12px;
+      }
+
+      .uh-tool-grid {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 19px;
+        margin-top: 24px;
+      }
+
+      .uh-panel,
+      .uh-side {
+        padding: 19px;
+        border-radius: 16px;
+      }
+
+      .uh-side-symbol {
+        margin: 19px 0 15px;
+      }
+
+      .uh-side h3 {
+        font-size: 22px;
+      }
+
+      .uh-footer {
+        font-size: 8px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .brand-name {
+        font-size: 10px;
+      }
+
+      .uh-intro h1 {
+        font-size: 36px;
+      }
+
+      .uh-panel-head h2 {
+        font-size: 15px;
+      }
+
+      .uh-submit,
+      .uh-warning-btn {
+        font-size: 11px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- POPUP PERINGATAN -->
+  <div class="uh-warning-overlay" id="uhWarning">
+    <div class="uh-warning-box" role="dialog" aria-modal="true"
+         aria-labelledby="uhWarningTitle">
+      <div class="uh-warning-icon" aria-hidden="true">✦</div>
+      <span class="eyebrow">SEBELUM MELANJUTKAN</span>
+
+      <h2 id="uhWarningTitle">Gunakan dengan bijak.</h2>
+
+      <p>
+        Harap gunakan tool ini dengan sewajarnya, ya.
+        Kita harus berbagi kesempatan penggunaan dengan pengguna lain.
+        Terima kasih sudah menggunakannya secara bijak :b
+      </p>
+
+      <button class="uh-warning-btn" id="uhAccept" type="button">
+        <span>SAYA MENGERTI</span>
+        <span aria-hidden="true">↗</span>
+      </button>
+
+      <small>VINN DEV · WINK ULTRA HD</small>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <header class="topbar wrap">
+    <a href="/" class="brand">
+      <img src="/logo.png" alt="Create Wink" class="brand-mark">
+      <div class="brand-name">
+        CREATE WINK
+        <span>VINN DEV</span>
+      </div>
+    </a>
+
+    <div class="top-actions">
+      <span class="tag cyan">✦ WINK ULTRA HD</span>
+      <a class="uh-back" href="/">← KEMBALI</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+
+    <!-- HERO -->
+    <section class="uh-intro">
+      <span class="uh-kicker">PROJECT / 003 — AI ENHANCEMENT</span>
+
+      <h1>
+        WINK<br>
+        <span>ULTRA HD.</span>
+      </h1>
+
+      <p>
+        Tingkatkan kualitas gambar atau video menggunakan Wink AI.
+        Masukkan URL media langsung untuk memulai proses enhancement.
+      </p>
+
+      <div class="uh-hero-tags">
+        <span class="uh-hero-tag">✦ IMAGE</span>
+        <span class="uh-hero-tag">↗ VIDEO</span>
+        <span class="uh-hero-tag">◇ ENHANCEMENT</span>
+      </div>
+    </section>
+
+    <!-- TOOL -->
+    <section class="uh-tool-grid">
+
+      <article class="uh-panel">
+        <div class="uh-panel-head">
+          <div>
+            <span class="eyebrow">01 / NEW REQUEST</span>
+            <h2>ULTRA HD ENHANCER</h2>
+          </div>
+
+          <span class="uh-chip">● READY TO USE</span>
+        </div>
+
+        <form id="uhForm">
+
+          <div class="uh-field">
+            <label for="uhUrl">URL GAMBAR ATAU VIDEO</label>
+
+            <input
+              class="uh-input"
+              id="uhUrl"
+              type="url"
+              placeholder="https://example.com/video.mp4"
+              maxlength="2048"
+              required
+            >
+
+            <small>
+              Gunakan URL HTTPS langsung yang bisa diakses oleh layanan
+              pemrosesan, bukan link halaman media sosial.
+            </small>
+          </div>
+
+          <label class="uh-check">
+            <input id="uhWait" type="checkbox">
+            <span>
+              <b>Tunggu sampai proses selesai</b><br>
+              Jika tidak dicentang, layanan dapat mengembalikan ID tugas
+              untuk diperiksa kemudian.
+            </span>
+          </label>
+
+          <div class="uh-field">
+            <label for="uhToken">TOKEN AKSES WINK (OPSIONAL)</label>
+
+            <input
+              class="uh-input"
+              id="uhToken"
+              type="password"
+              placeholder="Masukkan token jika diperlukan"
+              maxlength="4096"
+              autocomplete="off"
+            >
+
+            <small>
+              Isi hanya jika memang diperlukan. Jangan masukkan token
+              yang tidak kamu percaya.
+            </small>
+          </div>
+
+          <button class="uh-submit" id="uhSubmit" type="submit">
+            <span>✦ MULAI ENHANCEMENT</span>
+            <span class="uh-submit-icon" aria-hidden="true">↗</span>
+          </button>
+        </form>
+
+        <p class="uh-note">
+          WINK ULTRA HD · VINN DEV<br>
+          Gunakan secara wajar agar pengguna lain tetap mendapat kesempatan.
+        </p>
+
+        <div class="uh-result" id="uhResult" aria-live="polite">
+          <h3 id="uhResultTitle">HASIL PEMROSESAN</h3>
+          <pre id="uhOutput"></pre>
+        </div>
+      </article>
+
+      <!-- SIDE INFORMATION -->
+      <aside class="uh-side">
+        <div class="uh-side-top">
+          <span class="uh-side-label">WINK AI TOOLS / 003</span>
+          <span class="uh-side-icon" aria-hidden="true">✧</span>
+        </div>
+
+        <div class="uh-side-symbol">W+</div>
+
+        <h3>BETTER QUALITY.<br>SIMPLER PROCESS.</h3>
+
+        <p>
+          Satu tempat untuk memulai proses enhancement media.
+          Hasil akhir dan waktu pemrosesan bergantung pada layanan
+          yang digunakan.
+        </p>
+
+        <span class="uh-side-tag">✦ MEDIA ENHANCER</span>
+           <div class="uh-side-divider"></div>
+
+        <div class="uh-side-foot">
+          Gunakan media yang kamu punya izin untuk proses.
+          Hindari mengirim informasi pribadi atau token yang tidak diperlukan.
+        </div>
+      </aside>
+
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="uh-footer">
+      <span>© <span id="uhYear"></span> VINN DEV</span>
+      <span>WINK ULTRA HD / TOOL 003</span>
+      <a href="/">KEMBALI KE DASHBOARD ↑</a>
+    </footer>
+
+  </main>
+
+  <script>
+    document.getElementById("uhYear").textContent =
+      new Date().getFullYear();
+
+    const uhWarning = document.getElementById("uhWarning");
+    const uhAccept = document.getElementById("uhAccept");
+
+    uhAccept.addEventListener("click", function () {
+      uhWarning.classList.add("hidden");
+    });
+  </script>
+
+  <script src="/wink-ultra.js" defer></script>
+
+</body>
+</html>
