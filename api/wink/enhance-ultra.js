@@ -17,6 +17,7 @@ export default async function handler(req, res) {
   }
 
   const apiKey = process.env.JAKY_API_KEY;
+
   if (!apiKey) {
     return res.status(503).json({
       status: false,
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
 
   const now = Date.now();
   const recent = (requests.get(ip) || [])
-    .filter(t => now - t < WINDOW_MS);
+    .filter(time => now - time < WINDOW_MS);
 
   if (recent.length >= MAX_REQUESTS) {
     requests.set(ip, recent);
@@ -43,33 +44,35 @@ export default async function handler(req, res) {
   requests.set(ip, recent);
 
   const body = req.body || {};
-  const mediaUrl = typeof body.url === "string" ? body.url.trim() : "";
-  const wait = body.wait === true;
-  const token = typeof body.token === "string" ? body.token.trim() : "";
-
-  if (!mediaUrl || mediaUrl.length > 2048) {
-    return res.status(400).json({
-      status: false,
-      message: "URL media wajib diisi."
-    });
-  }
+  const mediaUrl = typeof body.url === "string"
+    ? body.url.trim()
+    : "";
+  const token = typeof body.token === "string"
+    ? body.token.trim()
+    : "";
 
   try {
     const parsed = new URL(mediaUrl);
-    if (parsed.protocol !== "https:") {
+
+    if (
+      parsed.protocol !== "https:" ||
+      parsed.hostname !== "raw.githubusercontent.com" ||
+      parsed.username ||
+      parsed.password
+    ) {
       throw new Error("invalid URL");
     }
   } catch {
     return res.status(400).json({
       status: false,
-      message: "Masukkan URL media HTTPS yang valid."
+      message: "URL foto GitHub tidak valid."
     });
   }
 
-  if (token.length > 4096) {
+  if (mediaUrl.length > 2048 || token.length > 4096) {
     return res.status(400).json({
       status: false,
-      message: "Token terlalu panjang."
+      message: "Data permintaan terlalu panjang."
     });
   }
 
@@ -78,32 +81,32 @@ export default async function handler(req, res) {
   );
 
   endpoint.searchParams.set("url", mediaUrl);
-  endpoint.searchParams.set("wait", String(wait));
+  endpoint.searchParams.set("wait", "true");
 
   if (token) {
     endpoint.searchParams.set("token", token);
   }
 
   const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 25_000);
+  const timeout = setTimeout(() => controller.abort(), 55_000);
 
   try {
-    const upstream = await fetch(endpoint.toString(), {
+    const upstream = await fetch(endpoint, {
       method: "GET",
       headers: {
         "x-jaky-key": apiKey,
-        "Accept": "application/json"
+        Accept: "application/json"
       },
       signal: controller.signal
     });
 
     const raw = await upstream.text();
-    let payload;
 
+    let payload;
     try {
       payload = raw ? JSON.parse(raw) : {};
     } catch {
-      payload = { response: raw.slice(0, 12000) };
+      payload = {};
     }
 
     if (!upstream.ok) {
@@ -111,20 +114,61 @@ export default async function handler(req, res) {
         upstream.status === 429 ? 429 : 502
       ).json({
         status: false,
-        message: payload.message || payload.msg ||
-          "API Wink Ultra HD mengembalikan error.",
-        upstreamStatus: upstream.status
+        message: payload.message ||
+          payload.msg ||
+          "API Wink Ultra HD mengembalikan error."
       });
     }
 
-    return res.status(200).json(payload);
-  } catch (error) {
-    const timeoutError = error?.name === "AbortError";
+    const resultUrl = payload?.result?.url;
 
-    return res.status(timeoutError ? 504 : 502).json({
+    // Jangan meneruskan respons yang tidak mempunyai URL hasil.
+    if (
+      payload?.status === true &&
+      typeof resultUrl === "string"
+    ) {
+      try {
+        const parsed = new URL(resultUrl);
+
+        if (
+          parsed.protocol !== "https:" ||
+          parsed.hostname !== "mt-wink-storage.meitudata.com"
+        ) {
+          throw new Error("Invalid result host");
+        }
+      } catch {
+        return res.status(502).json({
+          status: false,
+          message: "URL hasil dari Wink tidak valid."
+        });
+      }
+
+      // Token respons upstream tidak diteruskan ke browser.
+      return res.status(200).json({
+        status: true,
+        msg: payload.msg || "Process completed.",
+        result: {
+          taskId: payload.result.taskId,
+          status: payload.result.status,
+          statusText: payload.result.statusText,
+          url: resultUrl
+        }
+      });
+    }
+
+    return res.status(502).json({
       status: false,
-      message: timeoutError
-        ? "API timeout. Coba gunakan mode tanpa menunggu."
+      message: payload?.msg ||
+        payload?.message ||
+        "Wink belum mengembalikan hasil gambar."
+    });
+  } catch (error) {
+    const timedOut = error?.name === "AbortError";
+
+    return res.status(timedOut ? 504 : 502).json({
+      status: false,
+      message: timedOut
+        ? "Proses terlalu lama. Coba lagi beberapa saat."
         : "Tidak dapat menghubungi API Wink Ultra HD."
     });
   } finally {
