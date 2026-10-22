@@ -849,68 +849,75 @@
           <span class="uh-chip">● READY TO USE</span>
         </div>
 
-        <form id="uhForm">
+       
+<form id="uhForm" class="uh-form">
+  <label for="uhFile">Pilih foto dari galeri</label>
 
-          <div class="uh-field">
-            <label for="uhUrl">URL GAMBAR ATAU VIDEO</label>
+  <label class="uh-upload" for="uhFile">
+    <span class="uh-upload-icon">＋</span>
+    <strong>Pilih foto</strong>
+    <span>JPG, PNG, atau WebP · Maksimal 3 MB</span>
+    <input
+      id="uhFile"
+      type="file"
+      accept="image/jpeg,image/png,image/webp"
+      required
+    />
+  </label>
 
-            <input
-              class="uh-input"
-              id="uhUrl"
-              type="url"
-              placeholder="https://example.com/video.mp4"
-              maxlength="2048"
-              required
-            >
+  <div id="uhPreview" class="uh-preview" hidden>
+    <img id="uhPreviewImg" alt="Preview foto yang dipilih" />
+    <div class="uh-preview-info">
+      <strong id="uhPreviewName">Foto dipilih</strong>
+      <span id="uhPreviewSize"></span>
+    </div>
+    <button id="uhRemove" type="button" class="uh-remove">
+      Hapus
+    </button>
+  </div>
 
-            <small>
-              Gunakan URL HTTPS langsung yang bisa diakses oleh layanan
-              pemrosesan, bukan link halaman media sosial.
-            </small>
-          </div>
+  <label for="uhToken">Token Wink (opsional)</label>
+  <input
+    id="uhToken"
+    type="password"
+    placeholder="Masukkan token jika diperlukan"
+    autocomplete="off"
+  />
 
-          <label class="uh-check">
-            <input id="uhWait" type="checkbox">
-            <span>
-              <b>Tunggu sampai proses selesai</b><br>
-              Jika tidak dicentang, layanan dapat mengembalikan ID tugas
-              untuk diperiksa kemudian.
-            </span>
-          </label>
+  <button id="uhSubmit" type="submit">
+    ✦ MULAI ENHANCEMENT
+  </button>
+</form>
 
-          <div class="uh-field">
-            <label for="uhToken">TOKEN AKSES WINK (OPSIONAL)</label>
+<section id="uhResult" class="uh-result" aria-live="polite">
+  <h3 id="uhResultTitle">Hasil enhancement</h3>
 
-            <input
-              class="uh-input"
-              id="uhToken"
-              type="password"
-              placeholder="Masukkan token jika diperlukan"
-              maxlength="4096"
-              autocomplete="off"
-            >
+  <p id="uhStatus">Hasil foto akan muncul di sini.</p>
 
-            <small>
-              Isi hanya jika memang diperlukan. Jangan masukkan token
-              yang tidak kamu percaya.
-            </small>
-          </div>
+  <img
+    id="uhResultImage"
+    class="uh-result-image"
+    alt="Hasil enhancement Wink"
+    hidden
+  />
 
-          <button class="uh-submit" id="uhSubmit" type="submit">
-            <span>✦ MULAI ENHANCEMENT</span>
-            <span class="uh-submit-icon" aria-hidden="true">↗</span>
-          </button>
-        </form>
+  <a
+    id="uhDownload"
+    class="uh-download"
+    href="#"
+    hidden
+  >
+    ↓ Download hasil foto
+  </a>
+
+  <pre id="uhOutput"></pre>
+</section>
+
 
         <p class="uh-note">
           WINK ULTRA HD · VINN DEV<br>
           Gunakan secara wajar agar pengguna lain tetap mendapat kesempatan.
         </p>
-
-        <div class="uh-result" id="uhResult" aria-live="polite">
-          <h3 id="uhResultTitle">HASIL PEMROSESAN</h3>
-          <pre id="uhOutput"></pre>
-        </div>
       </article>
 
       <!-- SIDE INFORMATION -->
