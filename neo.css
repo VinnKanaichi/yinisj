@@ -1625,3 +1625,63 @@ select:focus {
   overflow-wrap: anywhere;
   white-space: pre-wrap;
 }
+/* Token input - Wink Ultra HD */
+#uhToken {
+  display: block;
+  width: 100%;
+  min-width: 0;
+  height: 48px;
+  box-sizing: border-box;
+
+  margin: 0;
+  padding: 0 15px;
+
+  border: 1px solid #ded7ed;
+  border-radius: 13px;
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: #302b3c;
+
+  font-family: inherit;
+  font-size: 13px;
+  line-height: normal;
+
+  box-shadow: 0 2px 8px rgba(80, 58, 120, 0.04);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+#uhToken::placeholder {
+  color: #a19aaf;
+  opacity: 1;
+}
+
+#uhToken:hover {
+  border-color: #c7b8e9;
+}
+
+#uhToken:focus {
+  border-color: #b7a1ed;
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(183, 161, 237, 0.18);
+}
+
+#uhToken:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Label token */
+.uh-form > label[for="uhToken"] {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: -5px;
+
+  color: #514963;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.5;
+}
